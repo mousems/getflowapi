@@ -79,9 +79,15 @@ $a=str_replace('VIEWSTATE' ,"" ,$a);
 $a=str_replace(' value=' ,"" ,$a);
 $a=str_replace('"' , "" ,$a);
 $a=base64_decode($a);
-preg_match('/[0-9,]{1,};IP=/', $a , $matchesa);
-$a=str_replace(';IP=',"",$matchesa[0]);
 
+
+preg_match('/[0-9,]{1,};IP=/', $a , $matchesa);
+$a=@str_replace(';IP=',"",$matchesa[0]);
+    //新增或修改資料unique欄位內容重覆時mysql會回報錯誤
+
+$a=str_replace(',' , "" ,$a);
+if($a==""){$a=0;}
+$a=(int)($a/1000000);
 echo ($a);
 // further processing ....
 
